@@ -1,19 +1,21 @@
 import React from 'react';
-import { Button } from 'antd';
 import { URL } from '@url';
-
-// import ERROR_404 from '@assets/images/icon/error-404.svg';
-import './NoMatch.scss';
 import { t } from 'i18next';
+import { Button } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
+import ERROR_404 from '@assets/icons/error-404.png';
+
+import './NoMatch.scss';
 
 export default function NoMatch({ history }) {
   return <div id="no-match-container">
     <div id="no-match">
-      {/* <img className="img-not-found" src={ERROR_404} alt=""/> */}
-      <div className="no-match__text">{t('XIN_LOI_TRANG_BAN_TRUY_CAP_KHONG_TON_TAI')}</div>
-      <Button type="primary" className="btn no-match__btn" onClick={() => history.replace(URL.MENU.DASHBOARD)}>
+      <img className="img-not-found" src={ERROR_404} alt=""/>
+      <div className="no-match__text">{t('SORRY_THE_PAGE_YOU_ARE_TRYING_TO_ACCESS_DOES_NOT_EXIST')}</div>
+      <Button type="primary" onClick={() => history.replace(URL.MENU.HOME)}>
+        <HomeOutlined />
         <span className="btn__title">
-          {t('QUAY_VE_TRANG_CHU')}
+          {t('BACK_HOME')}
         </span>
       </Button>
     </div>

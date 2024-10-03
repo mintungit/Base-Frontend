@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export function setCookieToken(typeToken, jwtToken) {
     const tokenDecode = jwtDecode(jwtToken);

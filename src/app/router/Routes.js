@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { URL } from '@url';
 import { connect } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -8,9 +8,8 @@ import LoginRoutes from '@app/router/LoginRoutes';
 import { ConstantsRoutes } from '@app/router/ConstantsRoutes';
 
 function RoutesComponent({ ...props }) {
-  console.log("vvvvvvvvvv");
+  const [token, setToken] = useState()
   const CONSTANTS_ROUTES = ConstantsRoutes();
-  console.log(CONSTANTS_ROUTES, "CONSTANTS_ROUTES");
 
   function renderItem({ hide, path, children, component: Component, ...router }) {
     if (hide) return null;
@@ -19,7 +18,7 @@ function RoutesComponent({ ...props }) {
     if (path) {
       routeReturn = [
         ...routeReturn, 
-        <Route path={path} element={<Component />} key={path} />
+        <Route path={path} element={Component ? <Component /> : null} key={path} />
       ];
       routeReturn = [
         ...routeReturn, 
@@ -38,9 +37,8 @@ function RoutesComponent({ ...props }) {
 
   return (
     <Suspense fallback={<Loading />}>
-      {/* {!token && <LoginRoutes />} */}
+      {!token && <LoginRoutes />}
       <Routes>
-        {console.log(CONSTANTS_ROUTES, "CONSTANTS_ROUTES")}
         {CONSTANTS_ROUTES.map((route, index) => {
           if (!route.hide) {
             if (route.to) {
