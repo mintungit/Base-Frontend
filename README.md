@@ -3,7 +3,7 @@
 ******* Install ******
 - npm install
   
-- ******* Start ******
+******* Start ******
 - npm start
 - npm run dev
   
