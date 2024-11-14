@@ -41,8 +41,8 @@ export function ConstantsRoutes() {
           icon: <HomeOutlined />,
           children: [
             {
-              path: URL.MENU.DEMO4,
-              menuName: t("DEMO4"),
+              path: URL.MENU.DEMO5,
+              menuName: t("DEMO5"),
               component: Home2,
             },
           ],
@@ -50,7 +50,21 @@ export function ConstantsRoutes() {
         {
           path: URL.MENU.DEMO3,
           menuName: t("DEMO3"),
-          component: Home2,
+          icon: <HomeOutlined />,
+          children: [
+            {
+              path: URL.MENU.DEMO6,
+              menuName: t("Demo 6"),
+              icon: <HomeOutlined />,
+              children: [
+                {
+                  path: URL.MENU.DEMO7,
+                  menuName: t("Demo 7"),
+                  component: Home2,
+                },
+              ],
+            },
+          ],
         },
         {
           path: URL.MENU.DEMO4,

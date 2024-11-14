@@ -8,6 +8,9 @@ export const URL = {
     DEMO2: "/demo2",
     DEMO3: "/demo3",
     DEMO4: "/demo4",
+    DEMO5: "/demo5",
+    DEMO6: "/demo6",
+    DEMO7: "/demo7",
   }
 };
   

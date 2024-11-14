@@ -11,15 +11,13 @@ function BreadcrumbLayout() {
   const CONSTANTS_ROUTES = ConstantsRoutes();
 
   useEffect(() => {
-    console.log(listBreadcrumb, "listBreadcrumb");
-    
     const breadcrumbBase = { path: '/', title: 'Dashboard' };
     setListBreadcrumb([breadcrumbBase]);
   
-    if(breadcrumbBase.path !==  location.pathname){
+    if (breadcrumbBase.path !== location.pathname) {
       for (let e of CONSTANTS_ROUTES) {
         if (e.path === location.pathname) {
-          addItemListBreadcrumb(e); 
+          addItemListBreadcrumb({ path: e.path, title: e.menuName });
           break;
         } else if (e.children && e.children.length > 0) {
           breadcrumbChild(e.children, { path: e.path, title: e.menuName });
@@ -28,25 +26,22 @@ function BreadcrumbLayout() {
     }
   }, [location]);
   
-  const breadcrumbChild = (children, breadcrumbParent) => {
+  const breadcrumbChild = (children, breadcrumbParentNew) => {
     for (let e of children) {
       if (e.path === location.pathname) {
-        setListBreadcrumb((prevListBreadcrumb) => [...prevListBreadcrumb, breadcrumbParent]);
-        addItemListBreadcrumb(e);
+        addItemListBreadcrumb(breadcrumbParentNew);
+        addItemListBreadcrumb({ path: e.path, title: e.menuName });
         break;
       } else if (e.children && e.children.length > 0) {
-        breadcrumbChild(e.children, breadcrumbParent);
+        breadcrumbChild(e.children, { path: e.path, title: e.menuName });
       }
     }
   };
   
-  const addItemListBreadcrumb = (item) => {
-    setListBreadcrumb((prevListBreadcrumb) => [
+  const addItemListBreadcrumb = (breadcrumbParent) => {
+    setListBreadcrumb(prevListBreadcrumb => [
       ...prevListBreadcrumb,
-      {
-        path: item.path,
-        title: item.menuName,
-      },
+      breadcrumbParent
     ]);
   };
 
