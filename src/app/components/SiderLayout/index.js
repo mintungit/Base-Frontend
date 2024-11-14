@@ -1,63 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import { t } from 'i18next';
-import Cookies from 'js-cookie';
-import { Sider, Menu, Layout } from 'antd';
+import { Menu, Layout } from 'antd';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { ConstantsRoutes } from '@app/router/ConstantsRoutes';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { UploadOutlined, DashboardOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { ADMIN_ROUTES } from '../../router/ConstantsRoutes';
 
 function SiderLayout(props) {
+  const CONSTANTS_ROUTES = ConstantsRoutes();
   const [itemsMenu, setItemsMenu] = useState([]);
   const [openKeys, setOpenKeys] = useState([]);
-  const [selectedKey, setSelectedKey] = useState(ADMIN_ROUTES[0].path);
+  const [selectedKey, setSelectedKey] = useState(CONSTANTS_ROUTES[0].path);
 
   const {
     collapsed,
     setCollapsed
-  } = props
+  } = props;
 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     const currentPath = location.pathname;
-    ADMIN_ROUTES?.map(menu => {
-      if(menu.children){
+    CONSTANTS_ROUTES?.map(menu => {
+      if (menu.children) {
         let findMenu = menu.children.find(e => e.path === currentPath);
-        if(findMenu){
-          setOpenKeys([menu.path])
+        if (findMenu) {
+          setOpenKeys([menu.path]);
         }
       }
-    })
-    setSelectedKey(currentPath); // Cập nhật key tương ứng
+    });
+    setSelectedKey(currentPath);
   }, [location.pathname]);
 
   useEffect(() => {
-    const itemsMenu = ADMIN_ROUTES.map(route => {
-      const item = renderItem(route);
-      if (route.children) {
-        item.children = route.children.map(childRoute => renderItem(childRoute));
-      }
-      return item;
+    const itemsMenu = CONSTANTS_ROUTES.map(route => {
+      return renderItem(route);
     });
     setItemsMenu(itemsMenu);
   }, []);
 
   function renderItem({ path, icon, menuName, component, children }) {
-    return {
-      key: path,
-      icon: icon,
-      label: component ? (
-        <Link to={path} className='text-decoration-none'>
-          {menuName}
-        </Link>
-      ) : (
-        menuName
-      ),
-      children: children ? [] : null // Khởi tạo children
-    };
+    if (children) {
+      return {
+        key: path,
+        icon: icon,
+        label: menuName,
+        children: children.map(childRoute => renderItem(childRoute))
+      };
+    } else {
+      return {
+        key: path,
+        icon: icon,
+        label: component ? (
+          <Link to={path} className="text-decoration-none">
+            {menuName}
+          </Link>
+        ) : (
+          menuName
+        ),
+      };
+    }
   }
 
   const handleOpenChange = (keys) => {

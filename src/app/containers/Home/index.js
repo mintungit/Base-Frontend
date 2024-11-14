@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 function Home({ ...props }) {
   return <div className="font-bold">
-    heheheho1
+    heheheho1233
   </div>;
 }
 
