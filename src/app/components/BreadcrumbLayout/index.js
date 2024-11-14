@@ -11,6 +11,8 @@ function BreadcrumbLayout() {
   const CONSTANTS_ROUTES = ConstantsRoutes();
 
   useEffect(() => {
+    console.log(listBreadcrumb, "listBreadcrumb");
+    
     const breadcrumbBase = { path: '/', title: 'Dashboard' };
     setListBreadcrumb([breadcrumbBase]);
   
@@ -52,7 +54,7 @@ function BreadcrumbLayout() {
     <Breadcrumb
       className='mx-3 pt-3'
       items={listBreadcrumb?.map((e, index) => ({
-        key: e.path,
+        key: `${e.path}-${index}`,
         title: (
           <Link
             to={e.path}
